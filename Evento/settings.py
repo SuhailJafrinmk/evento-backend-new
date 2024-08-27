@@ -34,6 +34,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+if not DEBUG:
+    MEDIA_STORAGE = 'django.core.servers.basehttp.MediaFilesStorage'
 
 
 
@@ -75,6 +77,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+    
 ]
 
 
@@ -121,7 +125,8 @@ DATABASES = {
 
 STATIC_URL = 'static/'
 STATIC_ROOT = "static/"
-STATICFILES_DIRS = os.path.join(BASE_DIR, 'staticfiles_build'),
+
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles_build')],
 
 #Redis Cache 
 CACHES = {
@@ -172,7 +177,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / 'media'
 
 
 GOOGLE_CLIENT_ID=os.getenv("GOOGLE_CLIENT_ID")
